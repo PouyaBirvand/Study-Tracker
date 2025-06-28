@@ -204,33 +204,84 @@ php tests/performance_test.php
 
 ```
 study-tracker/
-├── 📁 api/                 # API endpoints
-│   ├── auth/              # احراز هویت
-│   ├── sessions/          # جلسات مطالعه
-│   ├── subjects/          # دروس
-│   ├── goals/             # اهداف
-│   └── statistics/        # آمار
-├── 📁 config/             # تنظیمات
-├── 📁 database/           # پایگاه داده
-│   ├── schema.sql         # ساختار جداول
-│   └── migrations/        # تغییرات پایگاه داده
-├── 📁 public/             # فایل‌های عمومی
-│   ├── css/              # استایل‌ها
-│   ├── js/               # اسکریپت‌ها
-│   ├── images/           # تصاویر
-│   └── index.html        # صفحه اصلی
-├── 📁 src/                # کد منطق
-│   ├── Controllers/       # کنترلرها
-│   ├── Models/           # مدل‌ها
-│   ├── Services/         # سرویس‌ها
-│   └── Utils/            # ابزارهای کمکی
-├── 📁 tests/              # تست‌ها
-├── 📁 docs/               # مستندات
-├── 📁 uploads/            # فایل‌های آپلود شده
-├── 📁 logs/               # لاگ‌ها
-├── docker-compose.yml     # تنظیمات Docker
-├── composer.json          # وابستگی‌های PHP
-└── README.md             # این فایل
+├── 📁 public/
+│   ├── index.php                 # نقطه ورود اصلی
+│   ├── .htaccess                # تنظیمات Apache
+│   └── 📁 uploads/              # فایل‌های آپلود شده
+│
+├── 📁 src/
+│   ├── 📁 Config/
+│   │   └── DatabaseConfig.php   # تنظیمات دیتابیس
+│   │
+│   ├── 📁 Models/
+│   │   ├── BaseModel.php        # مدل پایه
+│   │   ├── User.php             # مدل کاربر
+│   │   ├── StudySession.php     # مدل جلسه مطالعه
+│   │   ├── Subject.php          # مدل درس
+│   │   ├── Goal.php             # مدل هدف
+│   │   ├── Achievement.php      # مدل دستاورد
+│   │   └── UserPoint.php        # مدل امتیاز کاربر
+│   │
+│   ├── 📁 Controllers/
+│   │   ├── BaseController.php   # کنترلر پایه
+│   │   ├── AuthController.php   # کنترلر احراز هویت
+│   │   ├── DashboardController.php # کنترلر داشبورد
+│   │   ├── StudySessionController.php # کنترلر جلسات
+│   │   ├── SubjectController.php # کنترلر دروس
+│   │   ├── GoalController.php   # کنترلر اهداف
+│   │   ├── StatisticsController.php # کنترلر آمار
+│   │   └── UserController.php   # کنترلر کاربر
+│   │
+│   ├── 📁 Services/
+│   │   ├── AuthService.php      # سرویس احراز هویت
+│   │   ├── StatisticsService.php # سرویس آمار
+│   │   └── GamificationService.php # سرویس گیمیفیکیشن
+│   │
+│   └── 📁 Utils/
+│       ├── Validator.php        # اعتبارسنجی
+│       ├── Response.php         # پاسخ‌دهی
+│       └── DateHelper.php       # کمک‌کننده تاریخ
+│
+├── 📁 database/
+│   ├── schema.sql               # ساختار دیتابیس
+│   ├── 📁 migrations/           # مایگریشن‌ها
+│   └── 📁 seeders/              # داده‌های اولیه
+│       ├── UserSeeder.php
+│       ├── SubjectSeeder.php
+│       └── AchievementSeeder.php
+│
+├── 📁 routes/
+│   └── api.php                  # مسیرهای API
+│
+├── 📁 config/
+│   ├── app.php                  # تنظیمات اپلیکیشن
+│   └── database.php             # تنظیمات دیتابیس
+│
+├── 📁 cli/
+│   ├── setup.php                # راه‌اندازی اولیه
+│   ├── migrate.php              # مایگریشن
+│   └── health-check.php         # بررسی سلامت
+│
+├── 📁 tests/
+│   ├── TestFramework.php        # فریمورک تست
+│   ├── AuthServiceTest.php      # تست احراز هویت
+│   ├── ApiTest.php              # تست API
+│   └── run.php                  # اجراکننده تست‌ها
+│
+├── 📁 docs/
+│   ├── generate.php             # تولیدکننده مستندات
+│   └── api-docs.html            # مستندات API
+│
+├── 📁 docker/
+│   └── apache.conf              # تنظیمات Apache
+│
+├── .env.example                 # نمونه متغیرهای محیطی
+├── .gitignore                   # فایل‌های نادیده گرفته شده
+├── Dockerfile                   # تنظیمات Docker
+├── docker-compose.yml           # Docker Compose
+├── deploy.sh                    # اسکریپت استقرار
+├── composer.json                # وابستگی‌های PHP
+└── README.md                    # راهنمای پروژه
 ```
 
 ## 🔧 تنظیمات
