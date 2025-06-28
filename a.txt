@@ -1,0 +1,15 @@
+به نظرت چه نیازی هست پروژه روی داکر دیپلوی بشه؟
+حواست هست کجا بودیم و داشتیم چیکار میکردیم دیگه؟
+
+
+و اینکه ادامه بده مثل اینکه متوقف شدی
+
+در ضمن
+UserPoint
+DatabaseConfig
+StatisticsController
+UserController
+schema.sql 
+api-docs
+
+رو ننوشتی!

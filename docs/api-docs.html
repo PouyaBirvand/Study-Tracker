@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Tracker API Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 10px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .section {
+            background: white;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .section-header h2 {
+            color: #495057;
+            font-size: 1.5em;
+        }
+
+        .section-content {
+            padding: 20px;
+        }
+
+        .endpoint {
+            margin-bottom: 30px;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .endpoint-header {
+            background: #f8f9fa;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .method {
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9em;
+            color: white;
+        }
+
+        .method.get {
+            background: #28a745;
+        }
+
+        .method.post {
+            background: #007bff;
+        }
+
+        .method.put {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .method.delete {
+            background: #dc3545;
+        }
+
+        .endpoint-url {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .endpoint-body {
+            padding: 20px;
+        }
+
+        .endpoint-description {
+            margin-bottom: 15px;
+            color: #6c757d;
+        }
+
+        .params,
+        .response {
+            margin-bottom: 20px;
+        }
+
+        .params h4,
+        .response h4 {
+            margin-bottom: 10px;
+            color: #495057;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .param-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .param-table th,
+        .param-table td {
+            padding: 10px;
+            text-align: right;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .param-table th {
+            background: #f8f9fa;
+            font-weight: bold;
+        }
+
+        .required {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .optional {
+            color: #6c757d;
+        }
+
+        .toc {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .toc h3 {
+            margin-bottom: 15px;
+            color: #495057;
+        }
+
+        .toc ul {
+            list-style: none;
+        }
+
+        .toc li {
+            margin-bottom: 8px;
+        }
+
+        .toc a {
+            color: #007bff;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .toc a:hover {
+            background: #f8f9fa;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Study Tracker API</h1>
+            <p>مستندات کامل API سیستم ردیابی مطالعه</p>
+        </div>
+
+        <div class="toc">
+            <h3>📋 فهرست مطالب</h3>
+            <ul>
+                <li><a href="#auth">🔐 احراز هویت</a></li>
+                <li><a href="#dashboard">📊 داشبورد</a></li>
+                <li><a href="#sessions">📖 جلسات مطالعه</a></li>
+                <li><a href="#subjects">📚 دروس</a></li>
+                <li><a href="#goals">🎯 اهداف</a></li>
+                <li><a href="#statistics">📈 آمار</a></li>
+                <li><a href="#user">👤 کاربر</a></li>
+            </ul>
+        </div>
+
+        <!-- Authentication Section -->
+        <div class="section" id="auth">
+            <div class="section-header">
+                <h2>🔐 احراز هویت</h2>
+            </div>
+            <div class="section-content">
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="endpoint-url">/api/auth/register</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-description">
+                            ثبت‌نام کاربر جدید در سیستم
+                        </div>
+
+                        <div class="params">
+                            <h4>پارامترهای ورودی:</h4>
+                            <table class="param-table">
+                                <tr>
+                                    <th>نام</th>
+                                    <th>نوع</th>
+                                    <th>الزامی</th>
+                                    <th>توضیحات</th>
+                                </tr>
+                                <tr>
+                                    <td>name</td>
+                                    <td>string</td>
+                                    <td class="required">بله</td>
+                                    <td>نام کاربر</td>
+                                </tr>
+                                <tr>
+                                    <td>email</td>
+                                    <td>string</td>
+                                    <td class="required">بله</td>
+                                    <td>ایمیل کاربر</td>
+                                </tr>
+                                <tr>
+                                    <td>password</td>
+                                    <td>string</td>
+                                    <td class="required">بله</td>
+                                    <td>رمز عبور (حداقل 6 کاراکتر)</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="response">
+                            <h4>نمونه پاسخ موفق:</h4>
+                            <div class="code-block">
+                                {
+                                "success": true,
+                                "message": "کاربر با موفقیت ثبت شد",
+                                "data": {
+                                "user": {
+                                "id": 1,
+                                "name": "علی احمدی",
+                                "email": "ali@example.com"
+                                },
+                                "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+                                }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="endpoint-url">/api/auth/login</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-description">
+                            ورود کاربر به سیستم
+                        </div>
+
+                        <div class="params">
+                            <h4>پارامترهای ورودی:</h4>
+                            <table class="param-table">
+                                <tr>
+                                    <th>نام</th>
+                                    <th>نوع</th>
+                                    <th>الزامی</th>
+                                    <th>توضیحات</th>
+                                </tr>
+                                <tr>
+                                    <td>email</td>
+                                    <td>string</td>
+                                    <td class="required">بله</td>
+                                    <td>ایمیل کاربر</td>
+                                </tr>
+                                <tr>
+                                    <td>password</td>
+                                    <td>string</td>
+                                    <td class="required">بله</td>
+                                    <td>رمز عبور</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="response">
+                            <h4>نمونه پاسخ موفق:</h4>
+                            <div class="code-block">
+                                {
+                                "success": true,
+                                "message": "ورود موفقیت‌آمیز",
+                                "data": {
+                                "user": {
+                                "id": 1,
+                                "name": "علی احمدی",
+                                "email": "ali@example.com",
+                                "total_points": 150
+                                },
+                                "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+                                }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div class="section" id="dashboard">
+            <div class="section-header">
+                <h2>📊 داشبورد</h2>
+            </div>
+            <div class="section-content">
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-url">/api/dashboard</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-description">
+                            دریافت اطلاعات داشبورد کاربر شامل آمار کلی، جلسات اخیر و اهداف فعال
+                        </div>
+
+                        <div class="response">
+                            <h4>نمونه پاسخ:</h4>
+                            <div class="code-block">
+                                {
+                                "success": true,
+                                "message": "داده‌های داشبورد دریافت شد",
+                                "data": {
+                                "user_stats": {
+                                "total_study_time": 1250,
+                                "total_sessions": 45,
+                                "current_streak": 7,
+                                "total_points": 850
+                                },
+                                "today_stats": {
+                                "study_time": 120,
+                                "sessions_count": 3,
+                                "productivity_avg": 8.5
+                                },
+                                "recent_sessions": [...],
+                                "active_goals": [...],
+                                "achievements": [...]
+                                }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Study Sessions Section -->
+        <div class="section" id="sessions">
+            <div class="section-header">
+                <h2>📖 جلسات مطالعه</h2>
+            </div>
+            <div class="section-content">
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="endpoint-url">/api/sessions/start</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-description">
+                            شروع جلسه مطالعه جدید
+                        </div>
+
+                        <div class="params">
+                            <h4>پارامترهای ورودی:</h4>
+                            <table class="param-table">
+                                <tr>
+                                    <th>نام</th>
+                                    <th>نوع</th>
+                                    <th>الزامی</th>
+                                    <th>توضیحات</th>
+                                </tr>
+                                <tr>
+                                    <td>subject_id</td>
+                                    <td>integer</td>
+                                    <td class="required">بله</td>
+                                    <td>شناسه درس</td>
+                                </tr>
+                                <tr>
+                                    <td>notes</td>
+                                    <td>string</td>
+                                    <td class="optional">خیر</td>
+                                    <td>یادداشت اولیه</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="response">
+                            <h4>نمونه پاسخ:</h4>
+                            <div class="code-block">
+                                {
+                                "success": true,
+                                "message": "جلسه مطالعه شروع شد",
+                                "data": {
+                                "session_id": 123,
+                                "subject_name": "ریاضی",
+                                "start_time": "2024-01-15 14:30:00"
+                                }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method put">PUT</span>
+                        <span class="endpoint-url">/api/sessions/{id}/end</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-description">
+                            پایان جلسه مطالعه و ثبت اطلاعات
+                        </div>
+
+                        <div class="params">
+                            <h4>پارامترهای ورودی:</h4>
+                            <table class="param-table">
+                                <tr>
+                                    <th>نام</th>
+                                    <th>نوع</th>
+                                    <th>الزامی</th>
+                                    <th>توضیحات</th>
+                                </tr>
+                                <tr>
+                                    <td>productivity_score</td>
+                                    <td>integer</td>
+                                    <td class="required">بله</td>
+                                    <td>امتیاز بهره‌وری (1-10)</td>
+                                </tr>
+                                <tr>
+                                    <td>notes</td>
+                                    <td>string</td>
+                                    <td class="optional">خیر</td>
+                                    <td>یادداشت پایانی</td>
+                                </tr>
+                                <tr>
+                                    <td>mood</td>
+                                    <td>string</td>
+                                    <td class="optional">خیر</td>
+                                    <td>حالت روحی (excellent, good, average, poor, terrible)</td>
+                                </tr>
+                                <tr>
+                                    <td>interruptions_count</td>
+                                    <td>integer</td>
+                                    <td class="optional">خیر</td>
+                                    <td>تعداد وقفه‌ها</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-url">/api/sessions</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-description">
+                            دریافت لیست جلسات مطالعه کاربر
+                        </div>
+
+                        <div class="params">
+                            <h4>پارامترهای Query:</h4>
+                            <table class="param-table">
+                                <tr>
+                                    <th>نام</th>
+                                    <th>نوع</th>
+                                    <th>الزامی</th>
+                                    <th>توضیحات</th>
+                                </tr>
+                                <tr>
+                                    <td>page</td>
+                                    <td>integer</td>
+                                    <td class="optional">خیر</td>
+                                    <td>شماره صفحه (پیش‌فرض: 1)</td>
+                                </tr>
+                                <tr>
+                                    <td>limit</td>
+                                    <td>integer</td>
+                                    <td class="optional">خیر</td>
+                                    <td>تعداد آیتم در صفحه (پیش‌فرض: 20)</td>
+                                </tr>
+                                <tr>
+                                    <td>subject_id</td>
+                                    <td>integer</td>
+                                    <td class="optional">خیر</td>
+                                    <td>فیلتر بر اساس درس</td>
+                                </tr>
+                                <tr>
+                                    <td>date_from</td>
+                                    <td>date</td>
+                                    <td class="optional">خیر</td>
+                                    <td>تاریخ شروع (YYYY-MM-DD)</td>
+                                </tr>
+                                <tr>
+                                    <td>date_to</td>
+                                    <td>date</td>
+                                    <td class="optional">خیر</td>
+                                    <td>تاریخ پایان (YYYY-MM-DD)</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Subjects Section -->
+        <div class="section" id="subjects">
+            <div class="section-header">
+                <h2>📚 دروس</h2>
+            </div>
+            <div class="section-content">
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-url">/api/subjects</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-description">
+                            دریافت لیست دروس کاربر
+                        </div>
+
+                        <div class="response">
+                            <h4>نمونه پاسخ:</h4>
+                            <div class="code-block">
+                                {
+                                "success": true,
+                                "message": "لیست دروس دریافت شد",
+                                "data": [
+                                {
+                                "id": 1,
+                                "name": "ریاضی",
+                                "description": "جبر و هندسه",
+                                "color": "#3498db",
+                                "icon": "📐",
+                                "is_active": true,
+                                "total_sessions": 15,
+                                "total_study_time": 450
+                                }
+                                ]
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="endpoint-url">/api/subjects</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-description">
+                            ایجاد درس جدید
+                        </div>
+
+                        <div class="params">
+                            <h4>پارامترهای ورودی:</h4>
+                            <table class="param-table">
+                                <tr>
+                                    <th>نام</th>
+                                    <th>نوع</th>
+                                    <th>الزامی</th>
+                                    <th>توضیحات</th>
+                                </tr>
+                                <tr>
+                                    <td>name</td>
+                                    <td>string</td>
+                                    <td class="required">بله</td>
+                                    <td>نام درس</td>
+                                </tr>
+                                <tr>
+                                    <td>description</td>
+                                    <td>string</td>
+                                    <td class="optional">خیر</td>
+                                    <td>توضیحات درس</td>
+                                </tr>
+                                <tr>
+                                    <td>color</td>
+                                    <td>string</td>
+                                    <td class="optional">خیر</td>
+                                    <td>رنگ درس (hex code)</td>
+                                </tr>
+                                <tr>
+                                    <td>icon</td>
+                                    <td>string</td>
+                                    <td class="optional">خیر</td>
+                                    <td>آیکون درس</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Goals Section -->
+        <div class="section" id="goals">
+            <div class="section-header">
+                <h2>🎯 اهداف</h2>
+            </div>
+            <div class="section-content">
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-url">/api/goals</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-description">
+                            دریافت لیست اهداف کاربر
+                        </div>
+
+                        <div class="params">
+                            <h4>پارامترهای Query:</h4>
+                            <table class="param-table">
+                                <tr>
+                                    <th>نام</th>
+                                    <th>نوع</th>
+                                    <th>الزامی</th>
+                                    <th>توضیحات</th>
+                                </tr>
+                                <tr>
+                                    <td>status</td>
+                                    <td>string</td>
+                                    <td class="optional">خیر</td>
+                                    <td>وضعیت هدف (active, completed, paused, cancelled)</td>
+                                </tr>
+                                <tr>
+                                    <td>type</td>
+                                    <td>string</td>
+                                    <td class="optional">خیر</td>
+                                    <td>نوع هدف (daily, weekly, monthly, custom)</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="response">
+                            <h4>نمونه پاسخ:</h4>
+                            <div class="code-block">
+                                {
+                                "success": true,
+                                "message": "لیست اهداف دریافت شد",
+                                "data": [
+                                {
+                                "id": 1,
+                                "title": "مطالعه روزانه ریاضی",
+                                "description": "2 ساعت مطالعه ریاضی در روز",
+                                "type": "daily",
+                                "target_value": 120,
+                                "target_unit": "minutes",
+                                "current_progress": 85,
+                                "progress_percentage": 70.8,
+                                "status": "active",
+                                "priority": "high",
+                                "start_date": "2024-01-01",
+                                "end_date": "2024-01-31"
+                                }
+                                ]
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="endpoint-url">/api/goals</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-description">
+                            ایجاد هدف جدید
+                        </div>
+
+                        <div class="params">
+                            <h4>پارامترهای ورودی:</h4>
+                            <table class="param-table">
+                                <tr>
+                                    <th>نام</th>
+                                    <th>نوع</th>
+                                    <th>الزامی</th>
+                                    <th>توضیحات</th>
+                                </tr>
+                                <tr>
+                                    <td>title</td>
+                                    <td>string</td>
+                                    <td class="required">بله</td>
+                                    <td>عنوان هدف</td>
+                                </tr>
+                                <tr>
+                                    <td>type</td>
+                                    <td>string</td>
+                                    <td class="required">بله</td>
+                                    <td>نوع هدف (daily, weekly, monthly, custom)</td>
+                                </tr>
+                                <tr>
+                                    <td>target_value</td>
+                                    <td>integer</td>
+                                    <td class="required">بله</td>
+                                    <td>مقدار هدف</td>
+                                </tr>
+                                <tr>
+                                    <td>target_unit</td>
+                                    <td>string</td>
+                                    <td class="required">بله</td>
+                                    <td>واحد هدف (minutes, hours, sessions, pages, chapters)</td>
+                                </tr>
+                                <tr>
+                                    <td>subject_id</td>
+                                    <td>integer</td>
+                                    <td class="optional">خیر</td>
+                                    <td>شناسه درس</td>
+                                </tr>
+                                <tr>
+                                    <td>priority</td>
+                                    <td>string</td>
+                                    <td class="optional">خیر</td>
+                                    <td>اولویت (low, medium, high, urgent)</td>
+                                </tr>
+                                <tr>
+                                    <td>start_date</td>
+                                    <td>date</td>
+                                    <td class="required">بله</td>
+                                    <td>تاریخ شروع (YYYY-MM-DD)</td>
+                                </tr>
+                                <tr>
+                                    <td>end_date</td>
+                                    <td>date</td>
+                                    <td class="required">بله</td>
+                                    <td>تاریخ پایان (YYYY-MM-DD)</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method put">PUT</span>
+                        <span class="endpoint-url">/api/goals/{id}/status</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-description">
+                            تغییر وضعیت هدف
+                        </div>
+
+                        <div class="params">
+                            <h4>پارامترهای ورودی:</h4>
+                            <table class="param-table">
+                                <tr>
+                                    <th>نام</th>
+                                    <th>نوع</th>
+                                    <th>الزامی</th>
+                                    <th>توضیحات</th>
+                                </tr>
+                                <tr>
+                                    <td>status</td>
+                                    <td>string</td>
+                                    <td class="required">بله</td>
+                                    <td>وضعیت جدید (active, completed, paused, cancelled)</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Statistics Section -->
+        <div class="section" id="statistics">
+            <div class="section-header">
+                <h2>📈 آمار</h2>
+            </div>
+            <div class="section-content">
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-url">/api/statistics/overview</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-description">
+                            دریافت آمار کلی کاربر
+                        </div>
+
+                        <div class="response">
+                            <h4>نمونه پاسخ:</h4>
+                            <div class="code-block">
+                                {
+                                "success": true,
+                                "message": "آمار کلی دریافت شد",
+                                "data": {
+                                "total_study_time": 2450,
+                                "total_sessions": 78,
+                                "average_session_duration": 31.4,
+                                "current_streak": 12,
+                                "longest_streak": 25,
+                                "total_subjects": 5,
+                                "completed_goals": 8,
+                                "total_points": 1250,
+                                "productivity_average": 7.8,
+                                "most_productive_hour": 14,
+                                "favorite_subject": {
+                                "name": "ریاضی",
+                                "study_time": 850
+                                }
+                                }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-url">/api/statistics/daily</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-description">
+                            دریافت آمار روزانه
+                        </div>
+
+                        <div class="params">
+                            <h4>پارامترهای Query:</h4>
+                            <table class="param-table">
+                                <tr>
+                                    <th>نام</th>
+                                    <th>نوع</th>
+                                    <th>الزامی</th>
+                                    <th>توضیحات</th>
+                                </tr>
+                                <tr>
+                                    <td>days</td>
+                                    <td>integer</td>
+                                    <td class="optional">خیر</td>
+                                    <td>تعداد روزهای گذشته (پیش‌فرض: 30)</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="response">
+                            <h4>نمونه پاسخ:</h4>
+                            <div class="code-block">
+                                {
+                                "success": true,
+                                "message": "آمار روزانه دریافت شد",
+                                "data": [
+                                {
+                                "date": "2024-01-15",
+                                "study_time": 120,
+                                "sessions_count": 3,
+                                "productivity_avg": 8.5,
+                                "subjects_studied": 2
+                                },
+                                {
+                                "date": "2024-01-14",
+                                "study_time": 90,
+                                "sessions_count": 2,
+                                "productivity_avg": 7.0,
+                                "subjects_studied": 1
+                                }
+                                ]
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-url">/api/statistics/subjects</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-description">
+                            دریافت آمار دروس
+                        </div>
+
+                        <div class="response">
+                            <h4>نمونه پاسخ:</h4>
+                            <div class="code-block">
+                                {
+                                "success": true,
+                                "message": "آمار دروس دریافت شد",
+                                "data": [
+                                {
+                                "subject_id": 1,
+                                "subject_name": "ریاضی",
+                                "total_time": 850,
+                                "sessions_count": 28,
+                                "average_productivity": 8.2,
+                                "percentage_of_total": 34.7
+                                },
+                                {
+                                "subject_id": 2,
+                                "subject_name": "فیزیک",
+                                "total_time": 650,
+                                "sessions_count": 22,
+                                "average_productivity": 7.8,
+                                "percentage_of_total": 26.5
+                                }
+                                ]
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- User Section -->
+        <div class="section" id="user">
+            <div class="section-header">
+                <h2>👤 کاربر</h2>
+            </div>
+            <div class="section-content">
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-url">/api/user/profile</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-description">
+                            دریافت پروفایل کاربر
+                        </div>
+
+                        <div class="response">
+                            <h4>نمونه پاسخ:</h4>
+                            <div class="code-block">
+                                {
+                                "success": true,
+                                "message": "پروفایل کاربر دریافت شد",
+                                "data": {
+                                "id": 1,
+                                "name": "علی احمدی",
+                                "email": "ali@example.com",
+                                "bio": "دانشجوی مهندسی کامپیوتر",
+                                "avatar": "/uploads/avatars/user1.jpg",
+                                "timezone": "Asia/Tehran",
+                                "language": "fa",
+                                "total_points": 1250,
+                                "level": 5,
+                                "next_level_points": 1500,
+                                "created_at": "2024-01-01 10:00:00"
+                                }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method put">PUT</span>
+                        <span class="endpoint-url">/api/user/profile</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-description">
+                            به‌روزرسانی پروفایل کاربر
+                        </div>
+
+                        <div class="params">
+                            <h4>پارامترهای ورودی:</h4>
+                            <table class="param-table">
+                                <tr>
+                                    <th>نام</th>
+                                    <th>نوع</th>
+                                    <th>الزامی</th>
+                                    <th>توضیحات</th>
+                                </tr>
+                                <tr>
+                                    <td>name</td>
+                                    <td>string</td>
+                                    <td class="optional">خیر</td>
+                                    <td>نام کاربر</td>
+                                </tr>
+                                <tr>
+                                    <td>email</td>
+                                    <td>string</td>
+                                    <td class="optional">خیر</td>
+                                    <td>ایمیل کاربر</td>
+                                </tr>
+                                <tr>
+                                    <td>bio</td>
+                                    <td>string</td>
+                                    <td class="optional">خیر</td>
+                                    <td>بیوگرافی</td>
+                                </tr>
+                                <tr>
+                                    <td>timezone</td>
+                                    <td>string</td>
+                                    <td class="optional">خیر</td>
+                                    <td>منطقه زمانی</td>
+                                </tr>
+                                <tr>
+                                    <td>language</td>
+                                    <td>string</td>
+                                    <td class="optional">خیر</td>
+                                    <td>زبان (fa, en)</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-url">/api/user/points/history</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-description">
+                            دریافت تاریخچه امتیازات کاربر
+                        </div>
+
+                        <div class="params">
+                            <h4>پارامترهای Query:</h4>
+                            <table class="param-table">
+                                <tr>
+                                    <th>نام</th>
+                                    <th>نوع</th>
+                                    <th>الزامی</th>
+                                    <th>توضیحات</th>
+                                </tr>
+                                <tr>
+                                    <td>limit</td>
+                                    <td>integer</td>
+                                    <td class="optional">خیر</td>
+                                    <td>تعداد آیتم (پیش‌فرض: 20)</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="response">
+                            <h4>نمونه پاسخ:</h4>
+                            <div class="code-block">
+                                {
+                                "success": true,
+                                "message": "تاریخچه امتیازات دریافت شد",
+                                "data": [
+                                {
+                                "id": 45,
+                                "points": 25,
+                                "reason": "تکمیل جلسه مطالعه",
+                                "type": "earned",
+                                "reference_type": "study_session",
+                                "created_at": "2024-01-15 16:30:00"
+                                },
+                                {
+                                "id": 44,
+                                "points": 100,
+                                "reason": "تکمیل هدف: مطالعه هفتگی",
+                                "type": "earned",
+                                "reference_type": "goal_completion",
+                                "created_at": "2024-01-14 20:00:00"
+                                }
+                                ]
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-url">/api/user/leaderboard</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-description">
+                            دریافت جدول امتیازات
+                        </div>
+
+                        <div class="params">
+                            <h4>پارامترهای Query:</h4>
+                            <table class="param-table">
+                                <tr>
+                                    <th>نام</th>
+                                    <th>نوع</th>
+                                    <th>الزامی</th>
+                                    <th>توضیحات</th>
+                                </tr>
+                                <tr>
+                                    <td>limit</td>
+                                    <td>integer</td>
+                                    <td class="optional">خیر</td>
+                                    <td>تعداد کاربر (پیش‌فرض: 10)</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="response">
+                            <h4>نمونه پاسخ:</h4>
+                            <div class="code-block">
+                                {
+                                "success": true,
+                                "message": "جدول امتیازات دریافت شد",
+                                "data": [
+                                {
+                                "rank": 1,
+                                "user_id": 5,
+                                "name": "سارا محمدی",
+                                "total_points": 2150,
+                                "level": 8
+                                },
+                                {
+                                "rank": 2,
+                                "user_id": 1,
+                                "name": "علی احمدی",
+                                "total_points": 1250,
+                                "level": 5
+                                }
+                                ]
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+                <!-- Error Codes Section -->
+                <div class="section" id="errors">
+                    <div class="section-header">
+                        <h2>⚠️ کدهای خطا</h2>
+                    </div>
+                    <div class="section-content">
+                        
+                        <div class="endpoint-body">
+                            <div class="endpoint-description">
+                                کدهای خطای رایج در API
+                            </div>
+                            
+                            <table class="param-table">
+                                <tr>
+                                    <th>کد HTTP</th>
+                                    <th>کد خطا</th>
+                                    <th>پیام</th>
+                                    <th>توضیحات</th>
+                                </tr>
+                                <tr>
+                                    <td>400</td>
+                                    <td>VALIDATION_ERROR</td>
+                                    <td>داده‌های ورودی نامعتبر</td>
+                                    <td>پارامترهای ارسالی صحیح نیستند</td>
+                                </tr>
+                                <tr>
+                                    <td>401</td>
+                                    <td>UNAUTHORIZED</td>
+                                    <td>عدم احراز هویت</td>
+                                    <td>توکن احراز هویت نامعتبر یا منقضی شده</td>
+                                </tr>
+                                <tr>
+                                    <td>403</td>
+                                    <td>FORBIDDEN</td>
+                                    <td>عدم دسترسی</td>
+                                    <td>کاربر دسترسی لازم را ندارد</td>
+                                </tr>
+                                <tr>
+                                    <td>404</td>
+                                    <td>NOT_FOUND</td>
+                                    <td>یافت نشد</td>
+                                    <td>منبع درخواستی وجود ندارد</td>
+                                </tr>
+                                <tr>
+                                    <td>409</td>
+                                    <td>CONFLICT</td>
+                                    <td>تداخل داده</td>
+                                    <td>داده تکراری یا تداخل در عملیات</td>
+                                </tr>
+                                <tr>
+                                    <td>422</td>
+                                    <td>UNPROCESSABLE_ENTITY</td>
+                                    <td>داده قابل پردازش نیست</td>
+                                    <td>ساختار داده صحیح اما محتوا نامعتبر</td>
+                                </tr>
+                                <tr>
+                                    <td>429</td>
+                                    <td>RATE_LIMIT_EXCEEDED</td>
+                                    <td>محدودیت تعداد درخواست</td>
+                                    <td>تعداد درخواست‌ها از حد مجاز بیشتر شده</td>
+                                </tr>
+                                <tr>
+                                    <td>500</td>
+                                    <td>INTERNAL_SERVER_ERROR</td>
+                                    <td>خطای سرور</td>
+                                    <td>خطای داخلی سرور</td>
+                                </tr>
+                            </table>
+                            
+                            <div style="margin-top: 20px;">
+                                <h4>نمونه پاسخ خطا:</h4>
+                                <div class="code-block">
+        {
+            "success": false,
+            "error": {
+                "code": "VALIDATION_ERROR",
+                "message": "داده‌های ورودی نامعتبر",
+                "details": {
+                    "email": ["فرمت ایمیل صحیح نیست"],
+                    "password": ["رمز عبور باید حداقل 6 کاراکتر باشد"]
+                }
+            }
+        }
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <!-- Authentication Section -->
+                <div class="section" id="auth-info">
+                    <div class="section-header">
+                        <h2>🔑 احراز هویت و امنیت</h2>
+                    </div>
+                    <div class="section-content">
+                        
+                        <div class="endpoint-body">
+                            <h4>نحوه احراز هویت:</h4>
+                            <p>برای دسترسی به API، باید توکن JWT را در هدر Authorization ارسال کنید:</p>
+                            
+                            <div class="code-block">
+        Authorization: Bearer YOUR_JWT_TOKEN
+                            </div>
+                            
+                            <h4 style="margin-top: 20px;">محدودیت‌های نرخ درخواست:</h4>
+                            <ul style="margin: 10px 0; padding-right: 20px;">
+                                <li>حداکثر 100 درخواست در دقیقه برای هر کاربر</li>
+                                <li>حداکثر 1000 درخواست در ساعت برای هر کاربر</li>
+                                <li>درخواست‌های بیش از حد با کد 429 رد می‌شوند</li>
+                            </ul>
+                            
+                            <h4 style="margin-top: 20px;">انقضای توکن:</h4>
+                            <ul style="margin: 10px 0; padding-right: 20px;">
+                                <li>توکن‌های دسترسی: 24 ساعت</li>
+                                <li>توکن‌های تازه‌سازی: 30 روز</li>
+                                <li>برای تازه‌سازی توکن از endpoint مربوطه استفاده کنید</li>
+                            </ul>
+                            
+                            <h4 style="margin-top: 20px;">امنیت:</h4>
+                            <ul style="margin: 10px 0; padding-right: 20px;">
+                                <li>همه درخواست‌ها باید از طریق HTTPS ارسال شوند</li>
+                                <li>رمزهای عبور با الگوریتم bcrypt هش می‌شوند</li>
+                                <li>داده‌های حساس لاگ نمی‌شوند</li>
+                                <li>از CORS برای کنترل دسترسی استفاده می‌شود</li>
+                            </ul>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <!-- Pagination Section -->
+                <div class="section" id="pagination">
+                    <div class="section-header">
+                        <h2>📄 صفحه‌بندی</h2>
+                    </div>
+                    <div class="section-content">
+                        
+                        <div class="endpoint-body">
+                            <div class="endpoint-description">
+                                نحوه کار با صفحه‌بندی در API
+                            </div>
+                            
+                            <h4>پارامترهای صفحه‌بندی:</h4>
+                            <table class="param-table">
+                                <tr>
+                                    <th>نام</th>
+                                    <th>نوع</th>
+                                    <th>پیش‌فرض</th>
+                                    <th>توضیحات</th>
+                                </tr>
+                                <tr>
+                                    <td>page</td>
+                                    <td>integer</td>
+                                    <td>1</td>
+                                    <td>شماره صفحه</td>
+                                </tr>
+                                <tr>
+                                    <td>limit</td>
+                                    <td>integer</td>
+                                    <td>20</td>
+                                    <td>تعداد آیتم در صفحه (حداکثر 100)</td>
+                                </tr>
+                            </table>
+                            
+                            <h4 style="margin-top: 20px;">نمونه پاسخ صفحه‌بندی شده:</h4>
+                            <div class="code-block">
+        {
+            "success": true,
+            "message": "داده‌ها دریافت شد",
+            "data": [...],
+            "pagination": {
+                "current_page": 2,
+                "per_page": 20,
+                "total": 156,
+                "total_pages": 8,
+                "has_next": true,
+                "has_prev": true,
+                "next_page": 3,
+                "prev_page": 1
+            }
+        }
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <!-- Filtering and Sorting Section -->
+                <div class="section" id="filtering">
+                    <div class="section-header">
+                        <h2>🔍 فیلتر و مرتب‌سازی</h2>
+                    </div>
+                    <div class="section-content">
+                        
+                        <div class="endpoint-body">
+                            <h4>فیلترهای عمومی:</h4>
+                            <table class="param-table">
+                                <tr>
+                                    <th>نام</th>
+                                    <th>نوع</th>
+                                    <th>توضیحات</th>
+                                </tr>
+                                <tr>
+                                    <td>search</td>
+                                    <td>string</td>
+                                    <td>جستجو در فیلدهای متنی</td>
+                                </tr>
+                                <tr>
+                                    <td>date_from</td>
+                                    <td>date</td>
+                                    <td>فیلتر از تاریخ (YYYY-MM-DD)</td>
+                                </tr>
+                                <tr>
+                                    <td>date_to</td>
+                                    <td>date</td>
+                                    <td>فیلتر تا تاریخ (YYYY-MM-DD)</td>
+                                </tr>
+                                <tr>
+                                    <td>sort_by</td>
+                                    <td>string</td>
+                                    <td>فیلد مرتب‌سازی</td>
+                                </tr>
+                                <tr>
+                                    <td>sort_order</td>
+                                    <td>string</td>
+                                    <td>نحوه مرتب‌سازی (asc, desc)</td>
+                                </tr>
+                            </table>
+                            
+                            <h4 style="margin-top: 20px;">نمونه درخواست:</h4>
+                            <div class="code-block">
+        GET /api/sessions?page=1&limit=10&subject_id=1&date_from=2024-01-01&sort_by=start_time&sort_order=desc
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <!-- Webhooks Section -->
+                <div class="section" id="webhooks">
+                    <div class="section-header">
+                        <h2>🔗 Webhooks</h2>
+                    </div>
+                    <div class="section-content">
+                        
+                        <div class="endpoint-body">
+                            <div class="endpoint-description">
+                                سیستم Webhook برای اطلاع‌رسانی رویدادها
+                            </div>
+                            
+                            <h4>رویدادهای قابل پیگیری:</h4>
+                            <table class="param-table">
+                                <tr>
+                                    <th>رویداد</th>
+                                    <th>توضیحات</th>
+                                </tr>
+                                <tr>
+                                    <td>session.started</td>
+                                    <td>شروع جلسه مطالعه</td>
+                                </tr>
+                                <tr>
+                                    <td>session.completed</td>
+                                    <td>تکمیل جلسه مطالعه</td>
+                                </tr>
+                                <tr>
+                                    <td>goal.completed</td>
+                                    <td>تکمیل هدف</td>
+                                </tr>
+                                <tr>
+                                    <td>achievement.earned</td>
+                                    <td>کسب دستاورد جدید</td>
+                                </tr>
+                                <tr>
+                                    <td>streak.milestone</td>
+                                    <td>رسیدن به نقطه عطف در پیوستگی</td>
+                                </tr>
+                            </table>
+                            
+                            <h4 style="margin-top: 20px;">نمونه payload webhook:</h4>
+                            <div class="code-block">
+        {
+            "event": "session.completed",
+            "timestamp": "2024-01-15T16:30:00Z",
+            "user_id": 1,
+            "data": {
+                "session_id": 123,
+                "subject_name": "ریاضی",
+                "duration_minutes": 45,
+                "productivity_score": 8,
+                "points_earned": 25
+            }
+        }
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+            </div>
+            
+            <script>
+                // Smooth scrolling for anchor links
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const target = document.querySelector(this.getAttribute('href'));
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    });
+                });
+                
+                // Highlight current section in TOC
+                window.addEventListener('scroll', function() {
+                    const sections = document.querySelectorAll('.section');
+                    const tocLinks = document.querySelectorAll('.toc a');
+                    
+                    let current = '';
+                    sections.forEach(section => {
+                        const sectionTop = section.offsetTop;
+                        const sectionHeight = section.clientHeight;
+                        if (pageYOffset >= (sectionTop - 200)) {
+                            current = section.getAttribute('id');
+                        }
+                    });
+                    
+                    tocLinks.forEach(link => {
+                        link.style.background = '';
+                        if (link.getAttribute('href') === '#' + current) {
+                            link.style.background = '#e3f2fd';
+                        }
+                    });
+                });
+            </script>
+        </body>
+        </html>
+        
