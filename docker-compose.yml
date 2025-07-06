@@ -1,40 +1,50 @@
 version: '3.8'
 
 services:
-  app:
-    build: .
-    ports:
-      - "8080:80"
-    volumes:
-      - .:/var/www/html
-    depends_on:
-      - db
-    environment:
-      - DB_HOST=db
-      - DB_DATABASE=study_tracker
-      - DB_USERNAME=root
-      - DB_PASSWORD=secret
+    study-app:
+        image: php:8.1-apache
+        container_name: study-app
+        ports:
+            - "8001:80"
+        volumes:
+            - .:/var/www/html
+        networks:
+            - my-network
+        environment:
+            - APACHE_DOCUMENT_ROOT=/var/www/html/public
+        command: >
+            bash -c "docker-php-ext-install pdo pdo_mysql &&
+                     apache2-foreground"
 
-  db:
-    image: mysql:8.0
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_DATABASE: study_tracker
-      MYSQL_ROOT_PASSWORD: secret
-    volumes:
-      - mysql_data:/var/lib/mysql
+    mysql:
+        image: mysql:8.0
+        container_name: mysql-study
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: study_tracker
+            MYSQL_USER: study
+            MYSQL_PASSWORD: study
+        networks:
+            - my-network
+        volumes:
+            - mysql_data:/var/lib/mysql
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    ports:
-      - "8081:80"
-    environment:
-      - PMA_HOST=db
-      - PMA_USER=root
-      - PMA_PASSWORD=secret
-    depends_on:
-      - db
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: phpmyadmin-study
+        ports:
+            - "8081:80"
+        environment:
+            PMA_HOST: mysql-study
+            MYSQL_ROOT_PASSWORD: root
+        networks:
+            - my-network
 
 volumes:
-  mysql_data:
+    mysql_data:
+
+networks:
+    my-network:
+        driver: bridge

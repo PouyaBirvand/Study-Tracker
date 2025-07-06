@@ -2,9 +2,6 @@
 -- ساختار دیتابیس سیستم ردیابی مطالعه
 
 SET FOREIGN_KEY_CHECKS = 0;
-DROP DATABASE IF EXISTS study_tracker;
-CREATE DATABASE study_tracker CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE study_tracker;
 
 -- جدول کاربران
 CREATE TABLE users (
