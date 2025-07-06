@@ -5,10 +5,10 @@
  */
 class DatabaseConfig 
 {
-    private const HOST = 'localhost';
-    private const DB_NAME = 'study_system';
-    private const USERNAME = 'root';
-    private const PASSWORD = '';
+    private const HOST = 'mysql-study';
+    private const DB_NAME = 'study_tracker';
+    private const USERNAME = 'study';
+    private const PASSWORD = 'study';
     private const CHARSET = 'utf8mb4';
     
     private static $instance = null;

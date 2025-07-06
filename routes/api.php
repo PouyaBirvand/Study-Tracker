@@ -4,8 +4,12 @@
  * تعریف مسیرهای API
  */
 
+
+require_once __DIR__ . '/../src/Core/BaseController.php';
+
 require_once __DIR__ . '/../src/Core/Router.php';
 require_once __DIR__ . '/../src/Controllers/AuthController.php';
+require_once __DIR__ . '/../src/Services/AuthService.php';
 require_once __DIR__ . '/../src/Controllers/DashboardController.php';
 require_once __DIR__ . '/../src/Controllers/StudySessionsController.php';
 require_once __DIR__ . '/../src/Controllers/SubjectsController.php';

@@ -13,7 +13,7 @@ return [
     ],
     'app' => [
         'name' => 'Study Tracker',
-        'url' => 'http://localhost:8000',
+        'url' => 'http://localhost:8001',
         'timezone' => 'Asia/Tehran'
     ]
 ];
